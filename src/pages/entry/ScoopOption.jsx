@@ -10,8 +10,8 @@ export default function ScoopOption({ name, imagePath, updateItemCount }) {
   return (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: 'center' }}>
       <img
-        style={{ width: '75%' }}
-        src={`http://locahost:3030/${imagePath}`}
+        style={{ width: '55%'}}
+        src={`http://localhost:3030/${imagePath}`}
         alt={`${name} scoop`}
       />
       <Form.Group
@@ -27,6 +27,7 @@ export default function ScoopOption({ name, imagePath, updateItemCount }) {
             type="number"
             defaultValue={0}
             onChange={handleChange}
+            min={0}
           />
         </Col>
       </Form.Group>
