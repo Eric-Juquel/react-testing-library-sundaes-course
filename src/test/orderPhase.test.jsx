@@ -87,8 +87,4 @@ test('order phases for happy path', async () => {
   expect(toppingsSubtotal).toHaveTextContent('0.00');
 });
 
-// wait for items to appear so that Testing Library doesn't get angry
-// about whats happening after test is over
 
-// await screen.findByRole('spinbutton', { name: 'Vanilla' });
-// await screen.findByRole('checkbox', { name: 'Cherries' });
