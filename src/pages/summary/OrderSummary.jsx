@@ -20,12 +20,16 @@ const OrderSummary = ({ setOrderPhase }) => {
         ))}
       </ul>
       <br />
-      <h2>Toppings</h2>
-      <ul>
-        {toppingsArray.map((key) => (
-          <li key={key}>{key}</li>
-        ))}
-      </ul>
+      {toppingsArray.length > 0 && (
+        <>
+          <h2>Toppings</h2>
+          <ul>
+            {toppingsArray.map((key) => (
+              <li key={key}>{key}</li>
+            ))}
+          </ul>
+        </>
+      )}
       <hr style={{ width: '50%' }} />
       <h2>Total: {orderDetails.totals.grandTotal} $</h2>
 

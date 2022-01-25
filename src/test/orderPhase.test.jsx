@@ -1,4 +1,4 @@
-import { render, screen } from '../test-utils/testing-library-utils';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import App from '../App';
@@ -56,11 +56,17 @@ test('order phases for happy path', async () => {
   userEvent.click(checkbox);
 
   // confirm order number on confirmation page
-  const button = screen.getByRole('button', {
+  const confirmOrderButton = screen.getByRole('button', {
     name: 'Confirm order',
   });
-  expect(button).toBeEnabled();
-  userEvent.click(button);
+  expect(confirmOrderButton).toBeEnabled();
+  userEvent.click(confirmOrderButton);
+
+  //expect "loading" to show
+  const loading = screen.getByText(/loading/i);
+  expect(loading).toBeInTheDocument();
+
+  //check confirmation page test
   const confirmationTitle = await screen.findByRole('heading', {
     name: /thank you/i,
   });
@@ -90,4 +96,25 @@ test('order phases for happy path', async () => {
 
   await screen.findByRole('spinbutton', { name: 'Vanilla' });
   await screen.findByRole('checkbox', { name: 'Cherries' });
+});
+
+test('Topping headers is not on the screen Order Summary when user did not select any', async () => {
+  render(<App />);
+
+  // add ice cream scoops and no toppings
+  const vanillaInput = await screen.findByRole('spinbutton', {
+    name: 'Vanilla',
+  });
+  userEvent.clear(vanillaInput);
+  userEvent.type(vanillaInput, '1');
+
+  // find and click order button
+  const submitBtn = screen.getByRole('button', {
+    name: /submit order/i,
+  });
+  userEvent.click(submitBtn);
+
+  // check toppings did not appear on summary
+  const toppings = screen.queryByRole('heading', { name: /toppings/i });
+  expect(toppings).not.toBeInTheDocument();
 });
