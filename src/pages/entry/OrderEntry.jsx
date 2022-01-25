@@ -1,16 +1,9 @@
 import Options from './Options';
 import { useOrderDetails } from '../../contexts/OrderDetails';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
-export default function OrderEntry() {
-  const navigate = useNavigate();
+export default function OrderEntry({ setOrderPhase }) {
   const [orderDetails] = useOrderDetails();
-
-  const summaryHandler = (e) => {
-    e.preventDefault();
-    navigate('/summary');
-  };
 
   return (
     <div>
@@ -22,7 +15,7 @@ export default function OrderEntry() {
       <Button
         variant="outline-light"
         style={{ margin: '1rem auto' }}
-        onClick={summaryHandler}
+        onClick={() => setOrderPhase('review')}
       >
         Submit Order
       </Button>

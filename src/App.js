@@ -1,23 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+
 import Container from 'react-bootstrap/Container';
 import OrderEntry from './pages/entry/OrderEntry';
-import { OrderDetailsProvider } from './contexts/OrderDetails';
 import OrderSummary from './pages/summary/OrderSummary';
 import OrderConfirmation from './pages/confirmation/OrderConfirmation';
 
+import { OrderDetailsProvider } from './contexts/OrderDetails';
+
 function App() {
+  const [orderPhase, setOrderPhase] = useState('inProgress');
+
+  let Component = OrderEntry;
+
+  switch (orderPhase) {
+    case 'inProgress':
+      Component = OrderEntry;
+      break;
+    case 'review':
+      Component = OrderSummary;
+      break;
+    case 'completed':
+      Component = OrderConfirmation;
+      break;
+    default:
+  }
+
   return (
-    <Container fluid>
-      <Router>
-        <OrderDetailsProvider>
-          <Routes>
-            <Route path="/" element={<OrderEntry />} />
-            <Route path="/summary" element={<OrderSummary />} />
-            <Route path="/confirmation" element={<OrderConfirmation />} />
-          </Routes>
-        </OrderDetailsProvider>
-      </Router>
-    </Container>
+    <OrderDetailsProvider>
+      <Container fluid>{<Component setOrderPhase={setOrderPhase} />}</Container>
+    </OrderDetailsProvider>
   );
 }
 

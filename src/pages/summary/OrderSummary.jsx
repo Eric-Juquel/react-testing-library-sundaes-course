@@ -1,14 +1,9 @@
-import { useLocation } from 'react-router-dom';
 import SummaryForm from './SummaryForm';
 import { useOrderDetails } from '../../contexts/OrderDetails';
 import { Col } from 'react-bootstrap';
 
-const OrderSummary = () => {
-  const location = useLocation();
-  console.log(location.pathname);
-
+const OrderSummary = ({ setOrderPhase }) => {
   const [orderDetails] = useOrderDetails();
-  console.log(orderDetails.scoops);
 
   const scoopsArray = Array.from(orderDetails.scoops.entries());
   const toppingsArray = Array.from(orderDetails.toppings.keys());
@@ -34,7 +29,7 @@ const OrderSummary = () => {
       <hr style={{ width: '50%' }} />
       <h2>Total: {orderDetails.totals.grandTotal} $</h2>
 
-      <SummaryForm />
+      <SummaryForm setOrderPhase={setOrderPhase} />
     </Col>
   );
 };

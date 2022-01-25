@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { useOrderDetails } from '../../contexts/OrderDetails';
 
-const OrderConfirmation = () => {
-  const navigate = useNavigate();
+const OrderConfirmation = ({ setOrderPhase }) => {
   const [orderNumber, setOrderNumber] = useState(null);
   const [, , resetOrder] = useOrderDetails();
 
@@ -17,7 +15,7 @@ const OrderConfirmation = () => {
 
   const newOrderHandler = () => {
     resetOrder();
-    navigate('/');
+    setOrderPhase('inProgress')
   };
 
   return (

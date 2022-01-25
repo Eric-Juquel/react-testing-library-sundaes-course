@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Col, OverlayTrigger, Popover } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
-export default function SummaryForm() {
-  const navigate = useNavigate();
+export default function SummaryForm({ setOrderPhase }) {
   const [tcChecked, setTcChecked] = useState(false);
 
   const popover = (
@@ -23,13 +21,13 @@ export default function SummaryForm() {
     </span>
   );
 
-  const submitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/confirmation');
+    setOrderPhase('completed');
   };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Col style={{ margin: '2rem auto' }}>
         <Form.Group controlId="terms-and-conditions">
           <Form.Check
@@ -41,12 +39,7 @@ export default function SummaryForm() {
         </Form.Group>
       </Col>
       <br />
-      <Button
-        variant="outline-light"
-        type="submit"
-        disabled={!tcChecked}
-        onClick={submitHandler}
-      >
+      <Button variant="outline-light" type="submit" disabled={!tcChecked}>
         Confirm order
       </Button>
     </Form>
