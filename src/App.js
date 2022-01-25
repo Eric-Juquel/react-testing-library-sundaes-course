@@ -23,6 +23,7 @@ function App() {
       Component = OrderConfirmation;
       break;
     default:
+      Component = OrderEntry;
   }
 
   return (

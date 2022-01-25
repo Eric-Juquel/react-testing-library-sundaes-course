@@ -78,13 +78,16 @@ test('order phases for happy path', async () => {
   expect(entryTitle).toBeInTheDocument();
 
   // check that scoops and toopings subtotals have been reset
-  const scoopsSubtotal = screen.getByText('Scoops total: $', { exact: false });
+  const scoopsSubtotal = await screen.findByText('Scoops total: $', {
+    exact: false,
+  });
   expect(scoopsSubtotal).toHaveTextContent('0.00');
 
-  const toppingsSubtotal = screen.getByText('Toppings total: $', {
+  const toppingsSubtotal = await screen.findByText('Toppings total: $', {
     exact: false,
   });
   expect(toppingsSubtotal).toHaveTextContent('0.00');
+
+  await screen.findByRole('spinbutton', { name: 'Vanilla' });
+  await screen.findByRole('checkbox', { name: 'Cherries' });
 });
-
-

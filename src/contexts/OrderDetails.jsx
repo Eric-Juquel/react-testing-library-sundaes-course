@@ -48,21 +48,39 @@ export function OrderDetailsProvider(props) {
   }, [optionCounts]);
 
   const value = useMemo(() => {
+    // function updateItemCount(itemName, newItemCount, optionType) {
+    //   const newOptionCounts = { ...optionCounts };
+
+    //   // update option count for this item with the new value
+    //   const optionCountsMap = optionCounts[optionType];
+    //   optionCountsMap.set(itemName, parseInt(newItemCount));
+
+    //   setOptionCounts(newOptionCounts);
+    // }
+
+    // alternate updateItemCount that DOES NOT mutate state. Reference Q&A:
+    // https://www.udemy.com/course/react-testing-library/learn/#questions/14446658/
     function updateItemCount(itemName, newItemCount, optionType) {
+      // get option Map and make a copy
+      const { [optionType]: optionMap } = optionCounts;
+      const newOptionMap = new Map(optionMap);
+
+      // update the copied Map
+      newOptionMap.set(itemName, parseInt(newItemCount));
+
+      // create new object with the old optionCounts plus new map
       const newOptionCounts = { ...optionCounts };
+      newOptionCounts[optionType] = newOptionMap;
 
-      // update option count for this item with the new value
-      const optionCountsMap = optionCounts[optionType];
-      optionCountsMap.set(itemName, parseInt(newItemCount));
-
+      // update state
       setOptionCounts(newOptionCounts);
     }
 
     function resetOrder() {
       setOptionCounts({
         scoops: new Map(),
-        toppings: new Map()
-      })
+        toppings: new Map(),
+      });
     }
 
     // getter: object containing options count for scoops and toppings, subtotals and totals

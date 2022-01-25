@@ -22,6 +22,7 @@ export default function Options({ optionType }) {
   }, [optionType]);
 
   if (error) {
+    // @ts-ignore
     return <AlertBanner />;
   }
 
