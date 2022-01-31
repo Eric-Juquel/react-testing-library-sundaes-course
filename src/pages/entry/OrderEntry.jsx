@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Options from './Options';
 import { useOrderDetails } from '../../contexts/OrderDetails';
 import { Button } from 'react-bootstrap';
@@ -12,8 +11,6 @@ export default function OrderEntry({ setOrderPhase }) {
     0
   );
 
-  const orderDisabled = numberOfScoops === 0;
-
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Design Your Sundae</h1>
@@ -25,7 +22,7 @@ export default function OrderEntry({ setOrderPhase }) {
         variant="outline-light"
         style={{ margin: '1rem auto' }}
         onClick={() => setOrderPhase('review')}
-        disabled={orderDisabled}
+        disabled={numberOfScoops === 0}
       >
         Submit Order
       </Button>

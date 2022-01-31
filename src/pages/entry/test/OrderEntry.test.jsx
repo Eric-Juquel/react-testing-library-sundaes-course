@@ -28,7 +28,7 @@ test('handles error for scoop and topping routes', async () => {
   });
 });
 
-test.only('submit button is disabled until a scoop is selected', async () => {
+test('submit button is disabled until a scoop is selected', async () => {
   render(<OrderEntry setOrderPhase={jest.fn()} />);
 
   const submitBtn = await screen.findByRole('button', {
